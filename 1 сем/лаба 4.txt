@@ -1,0 +1,588 @@
+Задание 1
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+
+#define A 1
+#define B 10
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+
+
+int main()
+{
+	int n = 0;
+	scanf("%d", &n);
+	FILE* file;
+	file = _fsopen("data.txt", "w", _SH_DENYNO);
+	for (int i = 0; i < n; i++)
+	{
+		fprintf(file, "%d ", RandomInt(A, B));
+	}
+
+	for (int i = 0; i < n*2; i++)
+	{
+		fprintf(file, "%lf ", RandomFloat(A, B));
+	}
+
+	fclose(file);
+	file = _fsopen("data.txt", "a", _SH_DENYNO);
+	for (int i = 0; i < n * 5; i++)
+	{
+		char c = RandomFloat(0, 255);
+		fprintf(file, "%c ", c);
+	}
+	fclose(file);
+}
+
+
+
+
+
+Задание 2
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+
+#define A 1
+#define B 10
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+
+
+int main()
+{
+	
+	FILE* file;
+	file = _fsopen("data.txt", "r", _SH_DENYNO);
+	if (!file)
+		exit(1);
+	char c;
+	do
+	{
+		c = fgetc(file);
+		printf("%c",c);
+	} while (c != EOF);
+	printf("\n\n");
+	fseek(file, 0, SEEK_SET);
+	int s = 1;
+	do
+	{
+		c = fgetc(file);
+		if ((s==1) && !((c == 'A') || (c == 'a') || (c == 'E') || (c == 'e') || (c == 'I') || (c == 'i') || (c == 'O') || (c == 'o') || (c == 'Q') || (c == 'q') || (c == 'U') || (c == 'u') || (c == 'Y') || (c == 'y')))
+		{
+			printf("%c ", c);
+			s = 0;
+		}
+		if (c == '\n')
+			s = 1;
+		else
+			s = 0;
+		
+	} while (c != EOF);
+	fclose(file);
+}
+
+
+
+
+Задание 3
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+
+#define A 1
+#define B 10
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+
+
+int main()
+{
+	
+	FILE* file;
+	file = _fsopen("data.txt", "r", _SH_DENYNO);
+	if (!file)
+	{
+		printf("Oshibka");
+		exit(1);
+	}
+	char c;
+	int ks = 0, kns = 0, sch = 0;
+	do
+	{
+		c = fgetc(file);
+		ks++;
+		if (c != '\n')
+			sch++;
+		else
+		{
+			if (sch == 0)
+				kns++;
+			sch = 0;
+		}
+			
+
+	} while (c != EOF);
+	ks--;
+	fclose(file);
+	file = _fsopen("data.txt", "a", _SH_DENYNO);
+	fprintf(file, "\n%d %d", ks, kns);
+	fclose(file);
+}
+
+
+
+
+Задание 4
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 10
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+
+
+int main()
+{
+
+	FILE* file;
+	file = _fsopen("data.txt", "r", _SH_DENYNO);
+	if (!file)
+		exit(1);
+
+	char a[214];
+	int kslovB = 0;
+	while (fscanf(file,"%s",&a)!=EOF)
+	{
+		printf("%c %c %c\n", a[0], a[strlen(a) / 2], a[strlen(a) - 1]);
+		for (int i = 0; a[i] != '\0'; i++)
+			if (a[i] == 'b' || a[i] == 'B')
+			{
+				kslovB++;
+				break;
+			}
+
+	}
+
+	/*
+	char c;
+	int ks = -1, dslova = 0, kslovB = 0, evslB = 0;
+	
+	do
+	{
+		c = fgetc(file);
+		ks++;
+		if (c == ' ' || c == EOF || c == '.' || c == '!' || c == '?' || c == ',' || c == '\t' || c == '\n')
+		{
+			if (dslova != 0)
+			{
+
+				fseek(file, ks - dslova, SEEK_SET);
+				printf("%c ", fgetc(file));
+				fseek(file, ks - (dslova / 2) - 1, SEEK_SET);
+				printf("%c ", fgetc(file));
+				fseek(file, ks - 1, SEEK_SET);
+				printf("%c ", fgetc(file));
+				printf("\n");
+				fseek(file, ks + 1, SEEK_SET);
+			}
+			dslova = 0;
+			evslB = 0;
+		}
+		else
+		{
+			if (c == 'b' || c == 'B')
+			{
+				kslovB++;
+				evslB = 1;
+			}
+
+			dslova++;
+		}
+
+
+	} while (c != EOF);
+	*/
+	printf("%d", kslovB);
+	fclose(file);
+}
+
+
+
+
+
+Задание 5
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+
+#define A 1
+#define B 10
+#define N 5
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+
+
+int main()
+{
+	char str[N][50];
+	for (int i = 0; i < N; i++)
+	{
+		scanf("%s", &str[i]);
+	}
+	for (int i = 0; i < N; i++)
+	{
+		printf("%s\n", str[i]);
+	}
+}
+
+
+
+
+Задание 6
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 10
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	char str[3][50], str1[150]="", str2[150] = "";
+	
+	int lensrt[3];
+	for (int i = 0; i < 3; i++)
+	{
+		scanf("%s", &str[i]);
+		lensrt[i] = 0;
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 50; j++)
+		{
+			if (str[i][j] == 0)
+				break;
+			else
+				lensrt[i]++;
+		}
+	}
+	int max=0, min=0, sr=0;
+	for (int i = 0; i < 3; i++)
+	{
+		if (lensrt[max] < lensrt[i])
+			max = i;
+		if (lensrt[min] > lensrt[i])
+			min = i;
+	}
+	sr = 3 - min - max;
+
+	printf("%s\t", str[0]);
+	printf("%s\t", str[1]);
+	printf("%s\n", str[2]);
+
+	strcat(str1, str[min]);
+	strcat(str1, str[sr]);
+	strcat(str1, str[max]);
+	printf("%s\t",str1);
+
+	strcat(str2, str[max]);
+	strcat(str2, str[sr]);
+	strcat(str2, str[min]);
+	printf("%s", str2);
+}
+
+
+
+
+Задание 7
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 10
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	char str[]="Nadeus stroka doljna bit na angliskom";
+	printf("%s\n", str);
+	for (int i = 0; str[i]!='\0'; i++)
+	{
+		switch (str[i])
+		{
+		case 'o':
+			str[i] = 'a';
+			break;
+		case 'a':
+			str[i] = 'e';
+			break;
+		case 'e':
+			str[i] = 'o';
+			break;
+		case 'O':
+			str[i] = 'A';
+			break;
+		case 'A':
+			str[i] = 'E';
+			break;
+		case 'E':
+			str[i] = 'O';
+			break;
+		}
+	}
+	printf("%s\n", str);
+	
+}
+
+
+
+
+Задание 8
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 10
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+
+int main()
+{
+	srand(time(NULL));
+	FILE* file;
+	file = _fsopen("data.txt", "r", _SH_DENYNO);
+	if (!file)
+		exit(1);
+	char c;
+	int ks = 0, kslovVstr = 0, dslova = 0, dstr=0;
+	do
+	{
+		c = fgetc(file);
+		ks++;
+		if (c == ' ' || c == EOF || c == '.' || c == '!' || c == '?' || c == ',' || c == '\t' || c == '\n')
+		{
+			
+			if (dslova != 0)
+			{
+				kslovVstr++;
+			}
+			dslova = 0;
+			if (c == '\n' || c == EOF)
+			{
+				int ns = RandomInt(1, kslovVstr);
+				//printf("%d\t", ns);
+				fseek(file, dstr, SEEK_SET);
+
+				char t;
+				int ds = 0;
+				do
+				{
+					t = fgetc(file);
+					//printf("%c", t);
+					if (t == ' ' || t == EOF || t == '.' || t == '!' || t == '?' || t == ',' || t == '\t' || t == '\n')
+					{
+						if (ds != 0)
+						{
+							ns--;
+						}
+						ds = 0;
+						if (ns == 0)
+							break;
+					}else{
+						ds++;
+						if (ns == 1)
+						{
+							printf("%c", t);
+						}
+					}
+
+				} while (t != '\n' && t != EOF);
+				puts("\n");
+				fseek(file, ks+1, SEEK_SET);
+				ks++;
+				kslovVstr = 0;
+				dstr = ks;
+			}
+			
+		}
+		else
+		{
+			dslova++;
+		}
+
+
+	} while (c != EOF);
+	
+	fclose(file);
+}
+
+
+
+
+Задание 9
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 10
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	srand(time(NULL));
+	FILE* file1;
+	file1 = _fsopen("data.txt", "r", _SH_DENYNO);
+	FILE* file2;
+	file2 = _fsopen("data1.txt", "w", _SH_DENYNO);
+	if (!file1)
+		exit(1);
+	char c;
+	int ks = 0;
+	do
+	{
+		c = fgetc(file1);
+		if (c == '\n' || c == EOF)
+		{
+			ks++;
+		}
+	} while (c != EOF);
+	
+	for (int i = ks; i > 0; i--)
+	{
+		fseek(file1, 0, SEEK_SET);
+		int sf = i;
+		do
+		{
+			c = fgetc(file1);
+			if (sf == 1)
+			{
+				if(c == EOF)
+					fprintf(file2, "\n");
+				else
+					fprintf(file2, "%c", c);
+			}
+			if (c == '\n' || c == EOF)
+			{
+				sf--;
+				if (sf == 0)
+					break;
+			}
+		} while (c != EOF);
+
+	}
+	
+	fclose(file1);
+	fclose(file2);
+}

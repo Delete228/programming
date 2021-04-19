@@ -1,0 +1,357 @@
+Задание 1
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 0
+#define B 99
+
+#define N 10
+#define M 10
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+
+
+
+void funk1(int a[N][M]) {
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			a[i][j] = RandomInt(A, B);
+		}
+	}
+}
+
+int sumch(int a)
+{
+	int i = 0;
+	while (a > 0)
+	{
+		i += a % 10;
+		a /= 10;
+	}
+	return i % 2;
+}
+
+
+void funk11(int a[N][M])
+{
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			printf("%5d", a[i][j]);
+		}
+		puts("");
+	}
+}
+
+void funk2(int a[N][M])
+{
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			if (!sumch(a[i][j]))
+			{
+				printf("%5d", a[i][j]);
+			}
+			else {
+				printf("     ");
+			}
+
+		}
+		puts("");
+	}
+}
+
+int main()
+{
+	int a[N][M];
+	funk1(a);
+	funk11(a);
+	puts("");
+	funk2(a);
+}
+
+
+
+
+Задание 2
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 0
+#define B 99
+
+#define N 10
+#define M 10
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+struct God
+{
+	int nomerGoda;
+	char era[10]="";
+	char visocosn[10]="";
+	int polnNed;
+	int nePolnNed;
+};
+
+int main()
+{
+	struct God goda[N];
+	FILE* file = fopen("data1.txt","r");
+	if (!file)
+	{
+		printf("Ti debil, file sozdai -_-");
+		exit(1);
+	}
+	for (int i = 0; i < N; i++)
+	{
+		fscanf(file, "%d", &goda[i].nomerGoda);
+		fscanf(file, "%s", &goda[i].era);
+		fscanf(file, "%s", &goda[i].visocosn);
+		fscanf(file, "%d", &goda[i].polnNed);
+		fscanf(file, "%d", &goda[i].nePolnNed);
+	}
+	fclose(file);
+	int q = 0;
+	for (int i = 0; i < N; i++)
+	{
+		if (strcat(goda[i].visocosn, "yes") && goda[i].nePolnNed % 2 == 0)
+		{
+			printf("%d\n", goda[i].nomerGoda);
+		}
+		if (strcat(goda[i].visocosn, "no"))
+		{
+			q += goda[i].polnNed;
+		}
+	}
+	printf("\n%d\n", q);
+}
+
+
+
+
+Задание 3
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 0
+#define B 99
+
+#define N 10
+#define M 10
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+struct data
+{
+	int day;
+	int month;
+	int year;
+};
+
+struct firma
+{
+	char fio[250] = "";
+	data date;
+	char sphera[250] = "";
+	int startCap;
+	int srdPribl;
+};
+
+int main()
+{
+	struct firma fir[N];
+	FILE* file = fopen("data2.txt", "r");
+	if (!file)
+	{
+		printf("Ti debil, file sozdai -_-");
+		exit(1);
+	}
+	for (int i = 0; i < N; i++)
+	{
+		fscanf(file, "%s", &fir[i].fio);
+		fscanf(file, "%d", &fir[i].date.day);
+		fscanf(file, "%d", &fir[i].date.month);
+		fscanf(file, "%d", &fir[i].date.year);
+		fscanf(file, "%s", &fir[i].sphera);
+		fscanf(file, "%d", &fir[i].startCap);
+		fscanf(file, "%d", &fir[i].srdPribl);
+	}
+	fclose(file);
+	int q = 0;
+	for (int i = 0; i < N; i++)
+	{
+		if (fir[q].startCap > fir[i].startCap)
+			q = i;
+	}
+
+	printf("%s\t%d.%d.%d\t%s\t%d\t%d\n", fir[q].fio, 
+							fir[q].date.day, 
+							fir[q].date.month, 
+							fir[q].date.year,
+							fir[q].sphera,
+							fir[q].startCap,
+							fir[q].srdPribl);
+
+	q = 1;
+	while (q != 0)
+	{
+		q = 0;
+		for (int i = 0; i < N - 1; i++)
+		{
+			if (fir[i].srdPribl > fir[i + 1].srdPribl)
+			{
+				firma h = fir[i];
+				fir[i] = fir[i + 1];
+				fir[i + 1] = h;
+				q++;
+			}
+		}
+	}
+
+	for (int i = 0; i < N; i++)
+	{
+		printf("%s\t%d\n", fir[i].fio, fir[i].srdPribl);
+	}
+}
+
+
+
+
+Задание 4
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 0
+#define B 99
+
+#define N 10
+#define M 10
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+struct data 
+{
+	int year1;
+	int year2;
+};
+
+struct znam
+{
+	char fio[250] = "";
+	int nomerDoma;
+	data date;
+};
+
+struct ylica
+{
+	char nazvanie[250]="";
+	int protaj;
+	znam* znam;
+};
+
+int main()
+{
+	struct ylica yli[N];
+	FILE* file = fopen("data3.txt","r");
+	if (!file)
+	{
+		printf("Ti debil, file sozdai -_-");
+		exit(1);
+	}
+	for (int i = 0; i < N; i++)
+	{
+		fscanf(file, "%s", &yli[i].nazvanie);
+		fscanf(file, "%d", &yli[i].protaj);
+		int q;
+		fscanf(file, "%d", &q);
+		yli[i].znam = (znam*)malloc(sizeof(znam)*q);
+		for (int j = 0; j < q; j++)
+		{
+			fscanf(file, "%s", &yli[i].znam[j].fio);
+			fscanf(file, "%d", &yli[i].znam[j].nomerDoma);
+			fscanf(file, "%d", &yli[i].znam[j].date.year1);
+			fscanf(file, "%d", &yli[i].znam[j].date.year2);
+		}
+	}
+	fclose(file);
+	int g = 0, h=0;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < sizeof(yli[i].znam)/4; j++)
+		{
+			if ((yli[g].znam[h].date.year2 - yli[g].znam[h].date.year1) < (yli[i].znam[j].date.year2 - yli[i].znam[j].date.year1))
+			{
+				g = i;
+				h = j;
+			}
+		}
+	}
+
+	printf("%s\t%d\n", yli[g].nazvanie);
+
+	h = 0;
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < sizeof(yli[i].znam)/4; j++)
+		{
+			if ((yli[i].znam[j].date.year2 - yli[i].znam[j].date.year1) > 10)
+			{
+				h += yli[i].protaj;
+				break;
+			}
+		}
+	}
+
+	printf("%d\n", h);
+}

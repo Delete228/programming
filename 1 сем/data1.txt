@@ -1,0 +1,10 @@
+1983 ne yes 63 43
+2073 dne no 54 42
+1123 ne no 13 83
+6528 dne yes 85 38
+4623 ne yes 12 27
+1874 dne yes 87 38
+1200 ne no 12 49
+1400 ne yes 58 50
+1395 dne yes 23 62
+1294 ne no 52 73

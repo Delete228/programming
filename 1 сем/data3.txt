@@ -1,0 +1,10 @@
+moskvi 45 2 Esenin 31 1290 1390 Lomonosov 59 1755 2001
+mira 42 1 Pushkin 58 2002 2008
+lenina 21 1 Lermantov 1 325 432
+stalina 72 1 Gagarin 90 423 743
+miusi 93 1 Legasov 2 124 125
+tvardovskogo 50 1 Gogol 7 3536 3682
+jokova 20 1 Lenin 8 1463 1678
+putena 5 1 Medvedev 3 2383 4743
+rossii 17 1 Tolstoi 28 3453 13090
+typih 76 1 Putin 79 2000 2024

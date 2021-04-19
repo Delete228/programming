@@ -1,0 +1,650 @@
+ Задание 1
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 10
+#define N 10
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	int a[N], min, * a1 = NULL, c=0;
+	for (int i = 0; i < N; i++)
+	{
+
+		a[i] = RandomInt(A, B);
+		if (c == 0)
+		{
+			min = a[i];
+			c = 1;
+		}
+			
+
+		printf("%.d ", a[i]);
+		if (a[i] < min)
+			min = a[i];
+	}
+	puts("");
+	for (int i = 0; i < N; i++)
+	{
+		if (a[i] > min * 2)
+		{
+			a1 = (int*)realloc(a1, sizeof(a1) + sizeof(int));
+			a1[sizeof(a1) / sizeof(int) - 1] = a[i];
+			printf("%d ", a1[sizeof(a1) / sizeof(int) - 1]);
+		}
+	}
+	free(a1);
+
+
+}
+........................................................
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A -10
+#define B 10
+#define N 10
+#define M 5
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	int a[N][M], min=B, *a1=NULL;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			a[i][j] = RandomInt(A,B);
+			printf("%.1d ", a[i][j]);
+		}
+		puts("");
+	}
+	puts("\n");
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			if (i + j > N - 1 && a[i][j] > 0)
+			{
+				a1 = (int*)realloc(a1, sizeof(a1) + sizeof(int));
+				a1[sizeof(a1) / sizeof(int) - 1] = a[i][j];
+				printf("%d ", a1[sizeof(a1) / sizeof(int) - 1]);
+			}
+		}
+	}
+	free(a1);
+
+}
+
+
+Задание 2
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A -10
+#define B 10
+#define N 10
+#define M 5
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	int a[N][M], an[N], am[M], c=0;
+	for (int i = 0; i < N; i++)
+		an[i] = 1;
+	for (int i = 0; i < M; i++)
+		am[i] = A;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			a[i][j] = RandomInt(A,B);
+
+			if (a[i][j] % 6 == 0 && j % 2 == 0)
+				an[i] *= a[i][j];
+
+			if (a[i][j] % 3 == 0)
+			{
+				if(c==0)
+				{
+					am[j] = a[i][j];
+					c=1;
+				}else{
+					if(a[i][j] > am[j])
+						am[j] = a[i][j];
+				}
+			}
+			printf("%.d ", a[i][j]);
+		}
+		printf("\t%d\n",an[i]);
+	}
+	puts("\n");
+
+	for (int i = 0; i < M; i++)
+	{
+		if (am[i] % 3 != 0)
+			am[i] = 0;
+		printf("%.1d ", am[i]);
+	}
+
+}
+
+
+
+
+Задание 3
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A -10
+#define B 10
+#define N 10
+#define M 5
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	int a[N][M], am[M], sym=0, c=0;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			a[i][j] = RandomInt(A,B);
+			
+			if (a[i][j] % 7 == 0)
+			{
+				if(c==0)
+				{
+					am[j] = a[i][j];
+					c=1;
+				}else{
+					if(a[i][j] < am[j])
+						am[j] = a[i][j];
+				}
+			}
+				
+			printf("%.d ", a[i][j]);
+		}
+		puts("");
+	}
+	puts("\n");
+
+	for (int i = 0; i < M; i++)
+	{
+		if (am[i] % 7 != 0)
+			am[i] = 0;
+		printf("%.1d ", am[i]);
+		sym += am[i];
+	}
+	printf("\n\n%.1d ", sym);
+
+}
+
+
+
+
+
+Задание 4
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 9
+#define N 5
+#define M 5
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	int a[N][M], k, r;
+	//scanf("%d", &k);
+	k = 3;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			a[i][j] = RandomInt(A,B);
+			printf("%.d ", a[i][j]);
+		}
+		puts("");
+	}
+	puts("\n");
+	do{
+		r = RandomInt(0, M);
+	} while (r == k);
+	
+	for (int i = 0; i < N; i++)
+	{
+		int n = a[i][r];
+		a[i][r] = a[i][k];
+		a[i][k] = n;
+	}
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			printf("%.d ", a[i][j]);
+		}
+		puts("");
+	}
+	puts("\n");
+	for (int i = 0; i < N; i++)
+	{
+		int n = a[i][i];
+		a[i][i] = a[N/2][i];
+		a[N/2][i] = n;
+	}
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			printf("%.d ", a[i][j]);
+		}
+		puts("");
+	}
+}
+
+
+
+
+
+Задание 5
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 9
+#define N 20
+
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	int a[N];
+	
+	
+	for (int i = 0; i < N; i++)
+	{
+		
+		a[i] = RandomInt(A,B);
+		printf("%.d ", a[i]);
+		
+	}
+	puts("\n");
+	for (int i = 0; i < N; i++)
+	{
+		if ((i + 1) % 5 == 0 && i!=N-1)
+		{
+			int n = a[i];
+			a[i] = a[i + 1];
+			a[i + 1] = n;
+		}
+		printf("%.d ", a[i]);
+	}
+	puts("\n");
+	
+}
+
+
+
+
+Задание 6
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 9
+#define N 15
+
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	int a[N];
+	for (int i = 0; i < N; i++)
+	{
+		a[i] = RandomInt(A, B);
+		printf("%d ", a[i]);
+	}
+	puts("\n");
+	for (int i = 0; i < N / 4; i++)
+	{
+		int n = a[i];
+		a[i] = a[N / 2 - i - 1];
+		a[N / 2 - i - 1] = n;
+	}
+
+	for (int i = N/2; i < N/2+(N-(N/2))/2; i++)
+	{
+		int n = a[i];
+		a[i] = a[N + N/2 - 1 - i];
+		a[N + N / 2 - 1 - i] = n;
+	}
+
+	for (int i = 0; i < N; i++)
+		printf("%d ", a[i]);
+}
+........................................................
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 9
+#define N 4
+#define M 4
+
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int main()
+{
+	int a[N][M];
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			a[i][j] = RandomInt(A, B);
+			printf("%d ", a[i][j]);
+		}
+		puts("");
+	}
+	puts("\n");
+	for (int j = 0; j < M; j++)
+	{
+		for (int i = N / 2; i < N / 2 + (N - (N / 2)) / 2; i++)
+		{
+			int n = a[i][j];
+			a[i][j] = a[N + N / 2 - 1 - i][j];
+			a[N + N / 2 - 1 - i][j] = n;
+		}
+	}
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			printf("%d ", a[i][j]);
+		}
+		puts("");
+	}
+}
+
+
+
+
+
+Задание 7
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 9
+#define N 10
+#define M 15
+
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int compare(const void* x1, const void* x2)
+{
+	return (*(int*)x1 - *(int*)x2);
+}
+
+void bublesort(int *a, int size)
+{
+	int q = 1;
+	while (q > 0)
+	{
+		q = 0;
+		for (int i = 0; i < size - 1; i++)
+		{
+			if (a[i] > a[i + 1])
+			{
+				int t = a[i];
+				a[i] = a[i + 1];
+				a[i + 1] = t;
+				q++;
+			}
+		}
+	}
+}
+
+int main()
+{
+	int a[N],b[M], maxA=B, maxB=B;
+	for (int i = 0; i < N; i++)
+	{
+		a[i] = RandomInt(A, B);
+		if (maxA < a[i])
+			maxA = a[i];
+		printf("%d ", a[i]);
+	}
+	printf("\t");
+	for (int i = 0; i < M; i++)
+	{
+		b[i] = RandomInt(A, B);
+		if (maxB < b[i])
+			maxB = b[i];
+		printf("%d ", b[i]);
+	}
+	puts("\n");
+	if (maxA > maxB)
+	{
+		//qsort(a,sizeof(a)/sizeof(int),sizeof(int),compare);
+		bublesort(a,sizeof(a)/sizeof(int));
+	}else{
+		//qsort(b, sizeof(b) / sizeof(int), sizeof(int), compare);
+		bublesort(b,sizeof(b)/sizeof(int));
+	}
+
+
+	for (int i = 0; i < N; i++)
+	{
+		printf("%d ", a[i]);
+	}
+	printf("\t");
+	for (int i = 0; i < M; i++)
+	{
+		printf("%d ", b[i]);
+	}
+}
+
+
+
+
+
+
+Задание 8
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <string.h>
+
+#define A 1
+#define B 9
+#define N 10
+#define M 15
+
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+double RandomFloat(double a, double b)
+{
+	return a + rand() * (b - a + 1.0) / RAND_MAX;
+}
+
+int compare(const void* x1, const void* x2)
+{
+	return (*(int*)x2 - *(int*)x1);
+}
+
+void bublesort(int *a, int size)
+{
+	int q = 1;
+	while (q > 0)
+	{
+		q = 0;
+		for (int i = 0; i < size - 1; i++)
+		{
+			if (a[i] < a[i + 1])
+			{
+				int t = a[i];
+				a[i] = a[i + 1];
+				a[i = 1] = t;
+				q++;
+			}
+		}
+	}
+}
+
+int main()
+{
+	int a[N][M];
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			a[i][j] = RandomInt(A, B);
+			printf("%d ", a[i][j]);
+		}
+		puts("");
+	}
+	puts("\n");
+	for (int i = 0; i < N; i++)
+	{
+		//qsort(a[i], sizeof(a[i]) / sizeof(int), sizeof(int), compare);
+		bublesort(a[i],M);
+	}
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			printf("%d ", a[i][j]);
+		}
+		puts("");
+	}
+		
+}

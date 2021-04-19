@@ -1,0 +1,187 @@
+Задание 1
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 6
+
+
+int compare(const void* x1, const void* x2)
+{
+	return (*(int*)x2 - *(int*)x1);
+}
+
+int main()
+{
+	int a[N];
+	FILE* file;
+	file = fopen("data1.txt","r");
+	if (!file)
+		exit(1);
+	for (int i = 0; i < N; i++)
+	{
+		fscanf(file, "%d", &a[i]);
+		printf("%d ", a[i]);
+	}
+	fclose(file);
+	puts("");
+	for (int i = 0; i < N; i++)
+	{
+		a[i] += a[i] % 10;
+	}
+	qsort(a,N,sizeof(int),compare);
+	for (int i = 0; i < N; i++)
+	{
+		printf("%d ", a[i]);
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+Задание 2
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define A -10
+#define B 10
+#define N 10
+
+
+
+int RandomInt(int a, int b)
+{
+	return a + rand() % (b - a + 1);
+}
+
+void funk1(int* a, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		a[i] = RandomInt(A, B);
+	}
+}
+void funk2(int* a, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		printf("%d ", a[i]);
+	}
+	puts("");
+}
+int funk3(int* a, int size)
+{
+	int minPol = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (a[i] > 0)
+		{
+			minPol = a[i];
+			break;
+		}
+	}
+	for (int i = 0; i < size; i++)
+	{
+		if (a[i] > 0 && a[i]<minPol)
+		{
+			minPol = a[i];
+		}
+	}
+	return minPol;
+}
+int funk4(int* a, int size)
+{
+	int maxOtr = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (a[i] < 0)
+		{
+			maxOtr = a[i];
+			break;
+		}
+	}
+	for (int i = 0; i < size; i++)
+	{
+		if (a[i] < 0 && a[i] > maxOtr)
+		{
+			maxOtr = a[i];
+		}
+	}
+	return maxOtr;
+}
+int main()
+{
+	srand(time(0));
+	int a[N];
+	funk1(a, N); //Заполнение
+	funk2(a, N); //Вывод
+	printf("%d", funk3(a, N) * funk4(a, N)); //funk3 - минимальное положительное; funk4 - максимальное отрицательное
+	
+}
+
+
+
+
+Задание 3
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main()
+{
+	FILE* file1;
+	FILE* file2;
+	file1 = fopen("text_file.txt","r");
+	if (!file1)
+		exit(1);
+	file2 = fopen("new_file.txt", "w");
+	int s=0;
+	char c;
+	do{
+		c = fgetc(file1);
+		s++;
+		if (s == 15)
+		{
+			s = 0;
+			fprintf(file2,"%c ",c);
+		}
+	} while (c != EOF);
+	fprintf(file2, "\n\n");
+	fseek(file1, 0, SEEK_SET);
+	fclose(file2);
+	file2 = fopen("new_file.txt", "a");
+	s = 0;
+	int d = 0;
+	do {
+		c = fgetc(file1);
+		d++;
+		if (c == '\n' || c == EOF)
+		{
+			fseek(file1, d-(s/2)-1, SEEK_SET);
+			char q;
+			do {
+				q = fgetc(file1);
+				if(q!=EOF)
+					fprintf(file2, "%c", q);
+			} while (q != EOF && q != '\n');
+			fseek(file1, d+1, SEEK_SET);
+			d++;
+			s = 0;
+		}
+		else {
+			s++;
+		}
+	} while (c != EOF);
+	fclose(file1);
+	fclose(file2);
+}

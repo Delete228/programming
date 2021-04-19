@@ -1,0 +1,249 @@
+Задание 1 
+#include <stdio.h>
+
+int month = -101;
+float left = 43.3;
+int w_code = 7;
+
+int main()
+{
+    printf("month = %d\nleft = %.1lf\nw_code = %d", month, left, w_code);
+}
+
+
+Задание 2
+#include <stdio.h>
+
+int fonk = 2;
+
+int main()
+{
+    fonk /= -2;
+    printf("fonk / (-2) = %d\n", fonk);
+    fonk += 1004;
+    printf("fonk + 1004 = %d\n", fonk);
+    fonk %= 5;
+    printf("fonk %% 5 = %d\n", fonk);
+    fonk *= 89;
+    printf("fonk * 89 = %d\n", fonk);
+    fonk -= -4;
+    printf("fonk - (-4) = %d\n", fonk);
+}
+
+
+Задание 3
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+
+int p1;
+int p2;
+float p3;
+FILE *file;
+
+int main()
+{
+	srand(time(NULL));
+	p1 = 20 + rand()%(181);
+	p1 *= -1;
+
+	p2 = 20 + rand() % (181);
+	p2 *= -1;
+
+	p3 = 20.0 + rand() * (181.0)/RAND_MAX;
+	p3 *= -1;
+	printf("%d\n%d\n%.1lf", p1, p2, p3);
+	file = _fsopen("output.txt","w", _SH_DENYNO);
+	fprintf(file, "%d\n%d\n%.1lf",p1,p2,p3);
+	fclose(file);
+}
+
+
+Задание 4
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+
+
+
+int main()
+{
+	int p1;
+	int p2;
+	int p3;
+	int p4;
+	int p5;
+	float f1;
+	float f2;
+	float f3;
+	FILE* file;
+
+	file = _fsopen("data4.txt","r", _SH_DENYNO);
+	fscanf_s(file, "%d %d %d %d %d %f %f %f", &p1, &p2, &p3, &p4, &p5, &f1, &f2, &f3);
+	//fscanf(file, "%lf %lf %lf", &f1, &f2,&f3);
+	printf("p1=%d p2=%d p3=%d p4=%d p5=%d\n", p1, p2, p3, p4, p5);
+	printf("f1=%f f2=%f f3=%f\n", f1, f2, f3);
+	printf("p1+p2+p3+p4+p5=%d\n", p1 + p2 + p3 + p4 + p5);
+	printf("f1+f2+f3=%f\n", f1 + f2 + f3);
+	fclose(file);
+}
+
+
+Задание 5
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+
+
+
+int main()
+{
+	float f1,f2;
+	int p1, p2, p3;
+	FILE* file;
+
+	file = _fsopen("data5.txt","r", _SH_DENYNO);
+	fscanf_s(file, "%f %f %d %d %d", &f1, &f2, &p1, &p2, &p3);
+	printf("max float = %f\nmax int = %d", (f1 > f2) ? f1 : f2, (p1>p3)?(p1>p2)?p1:p2:p3);
+	fclose(file);
+}
+
+
+Задание 6
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+
+
+
+int main()
+{
+	int e, d, f;
+
+	scanf_s("%d", &e);
+	scanf_s("%d", &d);
+	scanf_s("%d", &f);
+
+	e = 4;
+	d = 8;
+	f = 3;
+
+	if (f<0)
+	{
+		f = e + d;
+	}else{
+		if (e+d+f<=10)
+		{
+			e = d + f;
+		}else{
+			e -= 1;
+		}
+	}
+	printf("e = %d\nd = %d\nf = %d", e, f ,d);
+	return 0;
+}
+
+
+Задание 7
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <math.h>
+
+#define P 3.14
+
+int main()
+{
+	int a0, an, bn, n, x, L;
+	float q;
+	a0 = 1;
+	an = 9;
+	bn = 6;
+	n=10;
+	x = 3;
+	L = 4;
+	for(int i=1;i<=n;i++)
+	{
+		q += (an * cos((n * P * x) / L) + bn * sin((n * P * x) / L));
+	}
+	q+=a0;
+	
+
+	printf("%f", q);
+	return 0;
+}
+
+
+
+Задание 8
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+#include <locale.h>
+
+int main()
+{
+	setlocale(LC_ALL, "Rus");
+	char sym;
+	scanf_s("%c", &sym);
+	//sym = 's';
+
+		switch (sym)
+		{
+		case 's':
+			printf("Стелко");
+			break;
+		case 'd':
+			printf("Дерево");
+			break;
+		case 'z':
+			printf("Железо");
+			break;
+		case 'b':
+			printf("Бетон");
+			break;
+		case 'p':
+			printf("Пластик");
+			break;
+		case 'g':
+			printf("Глина");
+			break;
+		default:
+			printf("Нет такой буквы");
+			break;
+		}
+	return 0;
+}
+
+Задание 9
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <corecrt_share.h>
+
+
+int main()
+{
+	int x1, x2;
+	scanf_s("%d", &x1);
+	scanf_s("%d", &x2);
+	//for (int i = 1000; i >= 1; i/=10)
+	//{
+	//	printf("%d", ((x1 / i)%10) % ((x2 / i)%10));
+	//}
+
+	while(x1>0)
+	{
+		printf("%d", (x1%10) % (x2%10));
+		x1/=10;
+		x2/=10;
+	}
+	return 0;
+}
+
